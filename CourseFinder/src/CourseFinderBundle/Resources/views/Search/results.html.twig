@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Wyszukane kursy: </h1>
+
+    <ul> {% if (courses)  %}
+        
+        {% for course in courses %} 
+            {% set avg = course.avg %}
+            {% set course = course.course %}
+            <li>
+                <a href="{{ path('course_show', {'id': course.id}) }}">
+                    Nazwa kursu: {{ course.name|e }}
+                </a>
+            </li>
+            <li>Średnia ocen z opinii: {{ avg|e }}</li>
+            <li>Opis: {{ course.description|e }}</li>
+            <li>Szkoła: {{ course.school.name|e }}</li>
+            <li>Miasto: {{ course.city|e }}</li>
+            <li>Język: {{ course.programingLanguage|e }}</li>
+            <li>Data rozpoczęcia: {{ course.startDate|date('d-m-Y') }}</li>
+            <li>Data zakańczenia: {{ course.endDate|date('d-m-Y') }}</li>
+            <li>Cena: {{ course.price|e }} zł</li>
+            <li>Ilość godzin lekcyjnych {{ course.hours|e }} </li>
+            <li>
+                {% if (course.available == 1) %} 
+                   Są dostępne miejsca!
+                {% else %}
+                   Wszystkie miejsca już zajęte! 
+                {% endif  %}
+                
+            </li>
+            <hr>
+        {% endfor %}
+                {% else %}
+                    <h3>  Brak kursów spełniających kryteria...<br></h3>
+                    <em>   (prawdopodobnie musisz założyć więcej hajsu! :P ) </em>
+                {% endif  %}
+    </ul>
+
+{% endblock %}

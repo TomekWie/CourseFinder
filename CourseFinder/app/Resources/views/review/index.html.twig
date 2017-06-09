@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>Reviews list</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>School</th>
+                <th>Course</th>
+                <th>User</th>
+                <th>Content</th>
+                <th>Stars</th>
+                <th>Creationdate</th>
+                <th>Verified</th>
+                <th>Anonymous</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for review in reviews %}
+            <tr>
+                <td><a href="{{ path('review_show', { 'id': review.id }) }}">{{ review.id }}</a></td>
+                <td>{{ review.school.name }}</td>
+                <td>{{ review.course.name }}</td>
+                <td>{{ review.user.username }}</td>
+                <td>{{ review.content }}</td>
+                <td>{{ review.stars }}</td>
+                <td>{% if review.creationDate %}{{ review.creationDate|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if review.verified %}Yes{% else %}No{% endif %}</td>
+                <td>{% if review.anonymous %}Yes{% else %}No{% endif %}</td>
+                <td>
+                    <ul>
+                        <li>
+                            <a href="{{ path('review_show', { 'id': review.id }) }}">show</a>
+                        </li>
+                        <li>
+                            <a href="{{ path('review_edit', { 'id': review.id }) }}">edit</a>
+                        </li>
+                    </ul>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <ul>
+        <li>
+            <a href="{{ path('review_new') }}">Create a new review</a>
+        </li>
+    </ul>
+{% endblock %}
